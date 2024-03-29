@@ -23,8 +23,8 @@ class Client extends Model
         'owner_phone',
     ];
 
-    public function project()
+    public function projects()
     {
-        return $this->hasOne(Project::class);
+        return $this->hasMany(Project::class);
     }
 }

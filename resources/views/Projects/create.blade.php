@@ -12,7 +12,7 @@
         <div>
             <x-input-label for="client_id" :value="__('Client')" />
 
-            <select id="client_id" name="client_id" class="block mt-1 w-full">
+            <select id="client_id" name="client_id" class="block mt-1 w-full" :value="old('client_id')">
                 <option value="">-Select client-</option>
                 @foreach ($clients as $client)
                     <option value="{{ $client->id }}">{{ $client->name }}</option>
@@ -59,7 +59,7 @@
                 <option value="planned">Planned</option>
                 <option value="in progress">In progress</option>
                 <option value="completed">Completed</option>
-                <option value="suspended">suspended</option>
+                <option value="suspended">Suspended</option>
                 <option value="cancelled">Cancelled</option>
             </select>
 

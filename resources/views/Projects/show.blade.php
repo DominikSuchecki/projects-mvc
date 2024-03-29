@@ -4,9 +4,7 @@
             {{ __('Projects') }}
         </h2>
     </x-slot>
-
-    <a href="/tasks/create">Create new task</a>
-    assign new employee
+    <a href="/tasks/create/{{ $project->id }}">Create new task</a>
 
     {{ $project->name }}
 

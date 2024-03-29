@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Project;
+use App\Models\User;
 
 class ProjectController extends Controller
 {
@@ -23,6 +24,29 @@ class ProjectController extends Controller
         }
 
         return view('Projects.projects', ['projects' => $projects]);
+    }
+
+    public function assignView(string $id)
+    {
+      $project = Project::findOrFail($id);
+      $employees = $project->users()->get();
+      $users = User::all();
+    
+      return view('Projects.assign', ['projectId' => $id, 'users' => $users, 'employees' => $employees]);
+    }
+    
+
+    public function assign(Request $request, $projectId)
+    {
+        $project = Project::findOrFail($projectId);
+        $validatedData = $request->validate([
+            'assigned_users' => 'required|array|min:1',
+            'assigned_users.*' => 'integer|exists:users,id',
+        ]);
+
+        $project->users()->attach($validatedData['assigned_users']);
+
+        return redirect()->back()->with(['success' => 'Employees assigned to project successfully!']);
     }
 
     /**
@@ -45,7 +69,7 @@ class ProjectController extends Controller
             'description' => 'required',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date',
-            'status' => 'required|in:planned, in progress, completed, cancelled, suspended',
+            'status' => 'required'
         ]);
 
         $project = new Project([

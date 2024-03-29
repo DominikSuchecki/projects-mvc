@@ -31,6 +31,12 @@
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="url('/invoices')" :active="request()->is('invoices')">
+                        {{ __('Invoices') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="url('/employees')" :active="request()->is('employees')">
                         {{ __('Employees') }}
                     </x-nav-link>

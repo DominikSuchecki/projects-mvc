@@ -5,19 +5,9 @@
         </h2>
     </x-slot>
 
-    <a href="clients/create">Add new client</a>
-
-    <!-- Success Message -->
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
-
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="grid grid-cols-3 gap-4">
-                @foreach ($clients as $client)
                 <div class="bg-white overflow-hidden shadow rounded-lg">
                     <div class="px-4 py-5 sm:p-6">
                         <h3 class="text-lg leading-6 font-medium text-gray-900">
@@ -26,12 +16,28 @@
                         <p class="mt-2 text-sm text-gray-500">
                             {{ $client->nip }}
                         </p>
+
+                        @foreach ($projects as $project)
+                        <div class="bg-white overflow-hidden shadow rounded-lg">
+                        <div class="px-4 py-5 sm:p-6">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900">
+                                {{ $project->name }}
+                        </h3>
                         <p class="mt-2 text-sm text-gray-500">
-                            <a href="/clients/{{ $client->id }}">Details</a>
+                            {{ $project->description }}
                         </p>
+                        @endforeach
+
+                        <p class="mt-2 text-sm text-gray-500">
+                            <a href="/clients/edit/{{ $client->id }}">Edit</a>
+                        </p>
+                        <form action="/clients/delete/{{ $client->id }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit">Delete</button>
+                        </form>
                     </div>
                 </div>
-                @endforeach
             </div>
        </div>
     </div>

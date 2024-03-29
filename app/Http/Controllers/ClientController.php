@@ -64,7 +64,10 @@ class ClientController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $client = Client::findOrFail($id);
+        $projects = $client->projects()->get();
+    
+        return view('Clients.show', ['projectId' => $id, 'client' => $client, 'projects' => $projects]);
     }
 
     /**
@@ -72,7 +75,8 @@ class ClientController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $client = Client::findOrFail($client);
+        return view('Clients.edit', ['client' => $client]);
     }
 
     /**
@@ -80,7 +84,7 @@ class ClientController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        
     }
 
     /**

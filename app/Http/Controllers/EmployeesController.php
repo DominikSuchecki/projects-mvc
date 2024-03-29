@@ -12,10 +12,10 @@ class EmployeesController extends Controller
      */
     public function index()
     {
-        $employees = User::where('role', '=', 'employee')->get();
+        $employees = User::where('role', '!=', 'admin')->get();
     
         return view('Employees.employees', ['employees' => $employees]);
-    }    
+    }
 
     /**
      * Show the form for creating a new resource.

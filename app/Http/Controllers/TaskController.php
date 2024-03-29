@@ -17,9 +17,13 @@ class TaskController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(string $id)
     {
-        //
+        $project = Project::findOrFail($id);
+        $employees = $project->users()->get();
+        $users = User::all();
+        
+        return view('Tasks.create', ['projectId' => $id, 'users' => $users, 'employees' => $employees]);
     }
 
     /**

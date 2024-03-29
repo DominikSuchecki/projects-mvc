@@ -19,7 +19,12 @@
                         <p class="mt-2 text-sm text-gray-500">
                             {{ $project->description }}
                         </p>
+
                         <a href="/projects/{{ $project->id }}">Details</a>
+                        
+                        @if (Auth()->user()->role == 'admin')
+                            <a href="/projects/assign/{{ $project->id}}">Assign employees</a>
+                        @endif
                     </div>
                 </div>
                 @endforeach
