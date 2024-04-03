@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Models\User;
 
 class EmployeesController extends Controller
@@ -12,7 +13,7 @@ class EmployeesController extends Controller
      */
     public function index()
     {
-        $employees = User::where('role', '!=', 'admin')->get();
+        $employees = User::get();
     
         return view('Employees.employees', ['employees' => $employees]);
     }
@@ -38,7 +39,8 @@ class EmployeesController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $employee = User::with('projects')->findOrFail($id);
+        return view('Employees.show', ['employee' => $employee]);
     }
 
     /**
@@ -46,7 +48,9 @@ class EmployeesController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $employee = User::findOrFail($id);
+    
+        return view('Employees.edit', compact('employee'));
     }
 
     /**
@@ -54,14 +58,27 @@ class EmployeesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
-    }
+        $employee = User::findOrFail($id);
+    
+        $request->validate([
+            'position' => 'required|string|in:ui designer,frontend,backend,fullstack,devops', // Add allowed positions here
+        ]);
+    
+        $employee->position = $request->input('position');
+        $employee->save();
+    
+        return redirect()->route('employees.show', $id)->with('success', 'Employee position updated successfully!');
+    } 
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        $employee = User::findOrFail($id);
+        $employee->delete();
+    
+        return redirect()->route('projects.show', $id)->with('success', 'Employee deleted successfully!');
     }
+    
 }

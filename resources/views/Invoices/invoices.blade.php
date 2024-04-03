@@ -1,33 +1,26 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Employees') }}
+            {{ __('Invoices') }}
         </h2>
     </x-slot>
-    
+    <a href="{{ route('invoices.create') }}">Create new invoice</a>
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-
-            <a href="{{ route('register') }}">
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Create employee
-            </a>
-
             <div class="grid grid-cols-3 gap-4">
-                @foreach ($employees as $employee)
+                @foreach ($invoices as $invoice)
                 <div class="bg-white overflow-hidden shadow rounded-lg">
                     <div class="px-4 py-5 sm:p-6">
                         <h3 class="text-lg leading-6 font-medium text-gray-900">
-                            {{ $employee->first_name }}
+                            {{ $invoice->id }}
                         </h3>
-                        <p class="mt-2 text-sm text-gray-500">
-                            {{ $employee->last_name }}
-                        </p>
-                        <a href="/employees/{{ $employee->id }}">Details</a>
+                        <a href="/invoices/{{ $project->id }}">Details</a>
                     </div>
                 </div>
                 @endforeach
             </div>
         </div>
     </div>
+    
 </x-app-layout>

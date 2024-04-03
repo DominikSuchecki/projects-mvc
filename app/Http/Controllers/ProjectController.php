@@ -36,9 +36,9 @@ class ProjectController extends Controller
     }
     
 
-    public function assign(Request $request, $projectId)
+    public function assign(Request $request, $id)
     {
-        $project = Project::findOrFail($projectId);
+        $project = Project::findOrFail($id);
         $validatedData = $request->validate([
             'assigned_users' => 'required|array|min:1',
             'assigned_users.*' => 'integer|exists:users,id',
@@ -46,7 +46,17 @@ class ProjectController extends Controller
 
         $project->users()->attach($validatedData['assigned_users']);
 
-        return redirect()->back()->with(['success' => 'Employees assigned to project successfully!']);
+        return redirect()->back()->with(['success' => 'Employees assigned to project!']);
+    }
+
+    public function unassign(Request $request, $projectId, $userId)
+    {
+        $project = Project::findOrFail($projectId);
+        $user = User::findOrFail($userId);
+
+        $project->users()->detach($userId);
+    
+        return redirect()->back()->with(['success' => 'User unassigned from project!']);
     }
 
     /**
@@ -92,6 +102,7 @@ class ProjectController extends Controller
     public function show(string $id)
     {
         $project = Project::with('tasks')->findOrFail($id);
+
         return view('projects.show', ['project' => $project]);
     }
 

@@ -4,20 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\Invoice;
-use App\Models\Client;
-use App\Models\Item;
-
-class InvoiceController extends Controller
+class ItemController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $invoices = Invoice::get();
-    
-        return view('Invoices.invoices', ['invoices' => $invoices]);
+        //
     }
 
     /**
@@ -25,10 +19,8 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        $clients = Client::all();
-        return view('Invoices.create', ['clients' => $clients]);
+        //
     }
-
 
     /**
      * Store a newly created resource in storage.

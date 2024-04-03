@@ -11,17 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('projects', function (Blueprint $table) {
+        Schema::create('items', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('client_id')->nullable();
-            $table->text('name');
+            $table->unsignedBigInteger('invoice_id');
+            $table->string('name');
             $table->text('description');
-            $table->date('start_date');
-            $table->date('end_date')->nullable();
-            $table->string('status')->default('planned');
+            $table->integer('quantity');
+            $table->integer('size');
+            $table->decimal('net_price', 8, 2);
+            $table->decimal('vat', 8, 2);
             $table->timestamps();
-            
-            $table->foreign('client_id')->references('id')->on('clients')->onDelete('set null');;
+
+            $table->foreign('invoice_id')->references('id')->on('invoices');
         });
     }
 
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('projects');
+        Schema::dropIfExists('items');
     }
 };

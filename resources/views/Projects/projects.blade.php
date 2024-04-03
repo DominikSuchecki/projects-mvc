@@ -19,7 +19,9 @@
                         <p class="mt-2 text-sm text-gray-500">
                             {{ $project->description }}
                         </p>
-
+                        <p class="mt-2 text-sm text-gray-500">
+                            {{ $project->status }}
+                        </p>
                         <a href="/projects/{{ $project->id }}">Details</a>
                         
                         @if (Auth()->user()->role == 'admin')

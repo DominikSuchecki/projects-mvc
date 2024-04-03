@@ -18,7 +18,7 @@
                     {{ $employee->last_name }}
                 </p>
                 </div>
-                <form method="POST" action="{{ route('projects.unassign', [$projectId, $employee->id]) }}">
+                <form method="POST" action="{{ route('tasks.unassign', [$taskId, $employee->id]) }}">
                     @csrf  @method('DELETE')  <button type="submit" onclick="return confirm('Are you sure you want to unassign this employee?')">Unassign</button>
                 </form>
                 
@@ -29,7 +29,7 @@
         </div>
     </div>
 
-    <form method="POST" action="{{$projectId}}">
+    <form method="POST">
         @csrf
 
         <select id="assigned_users" name="assigned_users[]" class="form-select rounded-md shadow-sm w-full" multiple required>

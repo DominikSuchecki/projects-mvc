@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Clients') }}
+            {{ $client->name }}
         </h2>
     </x-slot>
 
@@ -29,12 +29,10 @@
                         @endforeach
 
                         <p class="mt-2 text-sm text-gray-500">
-                            <a href="/clients/edit/{{ $client->id }}">Edit</a>
+                            <a href="/clients/{{ $client->id }}/edit">Edit</a>
                         </p>
-                        <form action="/clients/delete/{{ $client->id }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit">Delete</button>
+                        <form method="POST" action="{{ route('clients.destroy', $client->id) }}">
+                            @csrf  @method('DELETE')  <button type="submit" onclick="return confirm('Are you sure you want to delete this client?')">Delete Client</button>
                         </form>
                     </div>
                 </div>

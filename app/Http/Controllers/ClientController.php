@@ -75,7 +75,7 @@ class ClientController extends Controller
      */
     public function edit(string $id)
     {
-        $client = Client::findOrFail($client);
+        $client = Client::findOrFail($id);
         return view('Clients.edit', ['client' => $client]);
     }
 
@@ -84,7 +84,32 @@ class ClientController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $client = Client::findOrFail($id);
         
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'address' => 'required|max:255',
+            'nip' => [
+                'required',
+                'unique:clients,nip,'.$client->id.',id',
+            ],
+            'regon' => [
+                'required',
+                'unique:clients,regon,'.$client->id.',id',
+            ],
+            'krs' => [
+                'nullable',
+                'unique:clients,krs,'.$client->id.',id',
+            ],
+            'owner_first_name' => 'nullable|max:255',
+            'owner_last_name' => 'nullable|max:255',
+            'owner_email' => 'nullable|email|max:255',
+            'owner_phone' => 'nullable|max:255',
+        ]);
+  
+        $client->update($validatedData);
+    
+        return redirect()->route('clients.show', $id)->with('success', 'Employee position updated successfully!');
     }
 
     /**
@@ -92,6 +117,9 @@ class ClientController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $client = Client::findOrFail($id);
+        $client->delete();
+    
+        return redirect()->route('clients.index')->with('success', 'Client deleted successfully!');
     }
 }
