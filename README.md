@@ -1,4 +1,4 @@
-# Projects management app
+# Projects management app (work in progress)
 
 The application allows users to create projects and assign managers, who are responsible for delegating tasks to employees and tracking their progress. Managers can monitor task statuses and notify team members of updates via email, while also documenting work through comments and image uploads. Admins manage user accounts, assign roles, and ensure that each project is supervised by a designated manager.
 
