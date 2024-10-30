@@ -46,8 +46,6 @@ Route::middleware('auth')->group(function () {
     Route::middleware(Admin::Class)->group(function () {
         Route::resource('clients', ClientController::class);
         Route::resource('employees', EmployeesController::class);
-        Route::resource('invoices', InvoiceController::class);
-        Route::resource('items', ItemsController::class);
     });
 
     /* TO DO...
